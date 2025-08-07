@@ -1,0 +1,24 @@
+HTTrack3.49-2+htsswf+htsjava launched on Thu, 07 Aug 2025 10:27:14 at https://garfagnanadream.it/garfagnana-fishing/ +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar
+(winhttrack -qwC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2A25000%f#f -F "Mozilla/4.5 (compatible; HTTrack 3.0x; Windows 98)" -%F "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [XR&CO'2014], %s -->" -%l "en, *" https://garfagnanadream.it/garfagnana-fishing/ -O1 "C:\My Web Sites\garfagnanafishing direct" +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+10:27:45	Error: 	"Not Found" (404) at link https://garfagnanadream.it/wp-content/uploads/2019/12/favicon-80x80.png (from https://garfagnanadream.it/garfagnana-fishing/)
+10:27:58	Error: 	"Not Found" (404) at link https://garfagnanadream.it/garfagnana-fishing/OneSignalSDKUpdaterWorker.js.php (from https://garfagnanadream.it/garfagnana-fishing/)
+10:27:58	Error: 	"Not Found" (404) at link https://garfagnanadream.it/garfagnana-fishing/OneSignalSDKWorker.js.php (from https://garfagnanadream.it/garfagnana-fishing/)
+10:27:58	Error: 	"Bad Request" (400) at link https://garfagnanadream.it/garfagnana-fishing/"https://www.garfagnanadream.it">Garfagnanadream.it</a></b>' (from https://garfagnanadream.it/garfagnana-fishing/)
+10:27:58	Error: 	"Not Found" (404) at link https://garfagnanadream.it/garfagnana-fishing/signals/config/ (from https://connect.facebook.net/en_US/fbevents.js)
+10:27:58	Error: 	"Not Found" (404) at link https://garfagnanadream.it/garfagnana-fishing/signals/plugins/ (from https://connect.facebook.net/en_US/fbevents.js)
+10:27:58	Error: 	"Not Found" (404) at link https://garfagnanadream.it/garfagnana-fishing/POST (from https://connect.facebook.net/en_US/fbevents.js)
+10:27:58	Error: 	"Not Found" (404) at link https://garfagnanadream.it/garfagnana-fishing/schema.org/ (from https://connect.facebook.net/en_US/fbevents.js)
+10:27:58	Error: 	"Not Found" (404) at link https://garfagnanadream.it/garfagnana-fishing/b.resolvedLink (from https://connect.facebook.net/en_US/fbevents.js)
+10:27:58	Error: 	"Not Found" (404) at link https://garfagnanadream.it/signals/iwl.js (from https://connect.facebook.net/en_US/fbevents.js)
+10:27:58	Error: 	"Not Found" (404) at link https://garfagnanadream.it/signals/iwl.js?pixel_id= (from https://connect.facebook.net/en_US/fbevents.js)
+10:27:58	Error: 	"Not Found" (404) at link https://garfagnanadream.it/garfagnana-fishing/c.dl (from https://connect.facebook.net/en_US/fbevents.js)
+10:27:58	Error: 	"Not Found" (404) at link https://garfagnanadream.it/garfagnana-fishing/c.rl (from https://connect.facebook.net/en_US/fbevents.js)
+
+HTTrack Website Copier/3.49-2 mirror complete in 44 seconds : 131 links scanned, 117 files written (17968929 bytes overall) [15953512 bytes received at 362579 bytes/sec], 3400024 bytes transferred using HTTP compression in 55 files, ratio 21%, 22.3 requests per connection
+(13 errors, 0 warnings, 0 messages)
