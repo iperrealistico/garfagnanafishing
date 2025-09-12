@@ -1045,33 +1045,6 @@
         overflow: hidden;
     }
     
-    /* Cookie banner */
-    .cookie-banner {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: white;
-        padding: var(--spacing-md);
-        box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-        display: none;
-        z-index: 9999;
-        animation: slideUp 0.5s ease-out;
-    }
-    
-    .cookie-banner.show {
-        display: block;
-    }
-    
-    @keyframes slideUp {
-        from {
-            transform: translateY(100%);
-        }
-        to {
-            transform: translateY(0);
-        }
-    }
-    
     /* NUOVO: Stile per logo integrato nel testo (drop cap) */
     .text-with-logo {
         position: relative;
@@ -1178,7 +1151,7 @@
     
     /* Print styles */
     @media print {
-        .header, .language-selector, .cookie-banner {
+        .header, .language-selector {
             display: none !important;
         }
         
@@ -2250,20 +2223,6 @@
     </div>
 </div>
 
-<!-- Cookie Banner -->
-<div id="cookie-banner" class="cookie-banner">
-    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--spacing-md);">
-        <div>
-            <strong data-lang="cookie-title">Questo sito utilizza i cookie</strong>
-            <p class="mb-0" style="font-size: 0.9rem;" data-lang="cookie-desc">Utilizziamo i cookie per migliorare la tua esperienza. Continuando accetti la nostra politica sui cookie.</p>
-        </div>
-        <div style="display: flex; gap: var(--spacing-sm);">
-            <button onclick="acceptCookies()" style="padding: 0.5rem 1.5rem; background: var(--color-primary); color: white; border: none; border-radius: var(--radius); cursor: pointer; font-weight: 500;" data-lang="cookie-accept">Accetta</button>
-            <button onclick="showCookieSettings()" style="padding: 0.5rem 1.5rem; background: transparent; color: var(--color-text); border: 1px solid var(--color-border); border-radius: var(--radius); cursor: pointer; font-weight: 500;" data-lang="cookie-settings">Impostazioni</button>
-        </div>
-    </div>
-</div>
-
 <script>
     // Sistema multilingua completo con TUTTE le traduzioni
     const translations = {
@@ -2313,10 +2272,6 @@
             'acc-auto-content': 'L\'auto è l\'opzione migliore per godersi alcune delle città più famose al mondo prima di immergersi nei territori incontaminati della Garfagnana. Da Firenze (1:30 h) è necessario proseguire in direzione Lucca, scegliendo l\'uscita Lucca Est per un giro in centro e da qui si prosegue sulla SR445 per la Garfagnana. Stessa cosa per quanto riguarda Pisa (1 h), a meno che non si opti per la SS12 radd passante per San Giuliano Terme. Da Lucca (45 min), invece, è sufficiente seguire le indicazioni per la Garfagnana, mentre dalla Versilia (1 h) ci si possono godere due passi di montagna molto suggestivi: quello del Cipollaio e quello del Vestito, da imboccare rispettivamente in corrispondenza di Querceta e Massa. Si arriva anche direttamente da Modena (2 h), grazie alla SP72.',
             'acc-aereo-content': 'Grazie ai collegamenti degli aeroporti internazionali di Pisa e Firenze è possibile arrivare direttamente in queste città da tutta Europa (Lisbona, Valencia, Barcellona, Madrid, Francoforte, Monaco, Parigi, Londra, Amsterdam, Ginevra e non solo). Da qui si può proseguire in auto o in treno.',
             'acc-treno-content': 'Entrambi gli aeroporti sono collegati direttamente con le relative stazioni principali (Pisa Centrale – Firenze Santa Maria Novella). Le soluzioni a disposizione sono unicamente treni regionali che impiegano parecchio tempo per percorrere la tratta. Ci vogliono circa 1 ora e 30 da Pisa, 2 ore 45 da Firenze, 50 min da Lucca, 50 minuti dalla stazione di Aulla-Lunigiana e in media 1 ora e 30 dalla Versilia (Viareggio).',
-            'cookie-title': 'Questo sito utilizza i cookie',
-            'cookie-desc': 'Utilizziamo i cookie per migliorare la tua esperienza. Continuando accetti la nostra politica sui cookie.',
-            'cookie-accept': 'Accetta',
-            'cookie-settings': 'Impostazioni',
             'zrs-alto-desc': 'Classificazione a salmonidi, carattere torrentizio ideale per trota mediterranea autoctona. Avviamento di un incubatoio, tecnica del cocooning, obiettivo tutela e rusticità delle trote autoctone.',
             'zrs-isola-desc': 'Bacino artificiale alimentato dal torrente Turrite Secca, nel cuore delle Apuane. Borgo medievale che lambisce il bacino, ristoranti e punti di ristoro accessibili.',
             'incubatoio-desc': 'Gestione per riproduzione artificiale della Trota Fario Mediterranea. Sede in località Casonza nel comune di Fosciandora.'
@@ -2575,16 +2530,6 @@
         accordion.classList.toggle('active');
     }
     
-    // Cookie
-    function acceptCookies() {
-        localStorage.setItem('cookiesAccepted', 'true');
-        document.getElementById('cookie-banner').classList.remove('show');
-    }
-    
-    function showCookieSettings() {
-        alert('Impostazioni cookie - Funzionalità da implementare');
-    }
-    
     // ANIMAZIONI ALL'APPARIZIONE con Intersection Observer
     function initScrollAnimations() {
         const animatedElements = document.querySelectorAll('.animate-on-scroll');
@@ -2675,13 +2620,6 @@
                 }
             });
         });
-        
-        // Cookie banner
-        setTimeout(() => {
-            if (!localStorage.getItem('cookiesAccepted')) {
-                document.getElementById('cookie-banner').classList.add('show');
-            }
-        }, 2000);
     });
 </script>
 </body>
