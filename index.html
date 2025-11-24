@@ -792,6 +792,7 @@
         background: none;
         border: none;
         padding: 0.5rem;
+        z-index: 2100;
     }
     
     .lightbox-close:hover {
@@ -809,6 +810,7 @@
         border: none;
         padding: 1rem;
         transition: var(--transition);
+        z-index: 2100;
     }
     
     .lightbox-nav:hover {
@@ -822,21 +824,39 @@
     .lightbox-next {
         right: 20px;
     }
-    
+
+    /* Wrapper video nel lightbox: sempre 16:9 e dentro allo schermo */
     .video-wrapper {
         position: relative;
-        padding-bottom: 56.25%;
-        width: 90%;
-        max-width: 1000px;
+        width: min(90vw, 960px);
+        aspect-ratio: 16 / 9;
+        max-height: 80vh;
     }
     
     .video-wrapper iframe {
         position: absolute;
-        top: 0;
-        left: 0;
+        inset: 0;
         width: 100%;
         height: 100%;
         border-radius: var(--radius);
+        border: 0;
+    }
+
+    /* Thumbnail video YouTube sempre 16:9 */
+    .video-thumb {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: #E5E7EB;
+        overflow: hidden;
+        border-radius: var(--radius);
+    }
+
+    .video-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
     }
     
     /* Pannelli ZRS espandibili */
@@ -1119,6 +1139,15 @@
             height: 200px;
             margin-top: var(--spacing-sm);
         }
+
+        .video-wrapper {
+            width: 95vw;
+            max-height: 60vh;
+        }
+
+        .lightbox-nav {
+            display: none;
+        }
         
         .text-with-logo .drop-cap-logo {
             width: 80px;
@@ -1194,9 +1223,9 @@
 <!-- Selettore lingua persistente funzionante -->
 <div class="language-selector" role="button" aria-label="Seleziona lingua" onclick="toggleLanguage()">
     <svg width="24" height="16" viewBox="0 0 24 16" aria-hidden="true" id="flag-icon">
-        <rect width="8" height="16" fill="#009246"/>
-        <rect x="8" width="8" height="16" fill="#FFFFFF"/>
-        <rect x="16" width="8" height="16" fill="#CE2B37"/>
+        <rect width="8" height="16" fill="#009246"></rect>
+        <rect x="8" width="8" height="16" fill="#FFFFFF"></rect>
+        <rect x="16" width="8" height="16" fill="#CE2B37"></rect>
     </svg>
     <span id="lang-label">Italiano</span>
     <span>▼</span>
@@ -1428,16 +1457,16 @@
         <div class="grid mt-lg" id="video-grid">
             <!-- Video 1 -->
             <div class="card animate-on-scroll zoom-in" style="cursor: pointer;" onclick="openLightbox(0)">
-                <div style="position: relative; width: 100%; height: 200px; background: #E5E7EB; overflow: hidden; border-radius: var(--radius);">
+                <div class="video-thumb">
                     <!-- URL completo del video -->
                     <div data-video-url="https://www.youtube.com/watch?v=FPlbpgOT6YA">
                         <!-- Placeholder iniziale, sostituito via JS con thumbnail YouTube -->
-                        <img src="https://via.placeholder.com/400x225/E5E7EB/9CA3AF?text=Video+1" style="width: 100%; height: 100%; object-fit: cover;">
+                        <img src="https://via.placeholder.com/400x225/E5E7EB/9CA3AF?text=Video+1" alt="Video Garfagnana Fishing 1">
                     </div>
                     <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none;">
                         <svg width="60" height="60" viewBox="0 0 24 24" fill="rgba(255,255,255,0.9)">
-                            <circle cx="12" cy="12" r="11" fill="rgba(0,0,0,0.7)"/>
-                            <path d="M10 8v8l6-4z" fill="white"/>
+                            <circle cx="12" cy="12" r="11" fill="rgba(0,0,0,0.7)"></circle>
+                            <path d="M10 8v8l6-4z" fill="white"></path>
                         </svg>
                     </div>
                 </div>
@@ -1445,16 +1474,16 @@
             
             <!-- Video 2 -->
             <div class="card animate-on-scroll zoom-in" style="cursor: pointer; animation-delay: 0.1s;" onclick="openLightbox(1)">
-                <div style="position: relative; width: 100%; height: 200px; background: #E5E7EB; overflow: hidden; border-radius: var(--radius);">
+                <div class="video-thumb">
                     <!-- URL completo del video -->
                     <div data-video-url="https://www.youtube.com/watch?v=Ao6lvNifaiY">
                         <!-- Placeholder iniziale, sostituito via JS con thumbnail YouTube -->
-                        <img src="https://via.placeholder.com/400x225/E5E7EB/9CA3AF?text=Video+2" style="width: 100%; height: 100%; object-fit: cover;">
+                        <img src="https://via.placeholder.com/400x225/E5E7EB/9CA3AF?text=Video+2" alt="Video Garfagnana Fishing 2">
                     </div>
                     <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none;">
                         <svg width="60" height="60" viewBox="0 0 24 24" fill="rgba(255,255,255,0.9)">
-                            <circle cx="12" cy="12" r="11" fill="rgba(0,0,0,0.7)"/>
-                            <path d="M10 8v8l6-4z" fill="white"/>
+                            <circle cx="12" cy="12" r="11" fill="rgba(0,0,0,0.7)"></circle>
+                            <path d="M10 8v8l6-4z" fill="white"></path>
                         </svg>
                     </div>
                 </div>
@@ -1485,17 +1514,17 @@
             <!-- TUTTE LE GUIDE DI PESCA -->
             <div class="info-card animate-on-scroll fade-up">
                 <div class="info-details">
-                    <h3>Alessio Pericoli – <span data-lang="guide-fly">Mosca</span></h3>
+                    <h3>Alessio Pericoli - <span data-lang="guide-fly">Mosca</span></h3>
                     <div class="contact-info">
                         <div class="contact-item">
                             <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"></path>
                             </svg>
                             <a href="tel:+393394623740">339 4623740</a>
                         </div>
                         <div class="contact-item">
                             <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"></path>
                             </svg>
                             pericolialessio@outlook.it
                         </div>
@@ -1509,1131 +1538,14 @@
             
             <div class="info-card animate-on-scroll fade-up" style="animation-delay: 0.1s;">
                 <div class="info-details">
-                    <h3>Gabriele Marchi – Spinning</h3>
+                    <h3>Gabriele Marchi - Spinning</h3>
                     <div class="contact-info">
                         <div class="contact-item">
                             <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"></path>
                             </svg>
                             <a href="tel:+393494550412">349 455 0412</a>
                         </div>
                         <div class="contact-item">
                             <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                            </svg>
-                            markigi@icloud.com
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://www.instagram.com/gm_fishingguide/" target="_blank" class="text-primary">Instagram</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/guides/guide-gabriele-marchi.jpg" data-placeholder="small"></div>
-            </div>
-            
-            <div class="info-card animate-on-scroll fade-up" style="animation-delay: 0.2s;">
-                <div class="info-details">
-                    <h3>Isaia Bertolacci – <span data-lang="guide-fly">Mosca</span></h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+393491497863">349 1497863</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                            </svg>
-                            isaiabertolacci41@gmail.com
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://www.instagram.com/isaia_fly_fishing/" target="_blank" class="text-primary">Instagram</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/guides/guide-isaia-bertolacci.jpg" data-placeholder="small"></div>
-            </div>
-            
-            <div class="info-card animate-on-scroll fade-up" style="animation-delay: 0.3s;">
-                <div class="info-details">
-                    <h3>Lorenzo Focacci – Spinning</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+393470415404">347 0415404</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                            </svg>
-                            lorenzo.focacci@gmail.com
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://www.instagram.com/lorefoca86/" target="_blank" class="text-primary">Instagram</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/guides/guide-lorenzo-focacci.jpg" data-placeholder="small"></div>
-            </div>
-            
-            <div class="info-card animate-on-scroll fade-up" style="animation-delay: 0.4s;">
-                <div class="info-details">
-                    <h3>Roberto Baldini – <span data-lang="guide-fly">Mosca</span></h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+393294917565">+39 329 4917565</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                            </svg>
-                            rb.baldini@alice.it
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://www.instagram.com/bob.baldini/" target="_blank" class="text-primary">Instagram</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/guides/guide-roberto-baldini.jpg" data-placeholder="small"></div>
-            </div>
-        </div>
-        
-        <div id="mangiare" class="tab-content">
-            <!-- TUTTI I RISTORANTI -->
-            <div class="info-card animate-on-scroll fade-up">
-                <div class="info-details">
-                    <h3>Ristorante Il Baretto</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+390583639136">0583 639136</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                            </svg>
-                            Via Farini 5, Castelnuovo di Garfagnana
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://www.tripadvisor.it/Restaurant_Review-g676357-d2723596-Reviews-Ristorante_Il_Baretto-Castelnuovo_di_Garfagnana_Province_of_Lucca_Tuscany.html" target="_blank" data-lang="website">Sito Web</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/restaurants/ristorante-baretto.jpg" data-placeholder="small"></div>
-            </div>
-            
-            <div class="info-card animate-on-scroll fade-up" style="animation-delay: 0.1s;">
-                <div class="info-details">
-                    <h3>La Bottega del Fattore 2</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+390583600465">0583 600465</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                            </svg>
-                            Via Giuseppe Garibaldi, Camporgiano
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://www.labottegadelfattoredue.com/" target="_blank" data-lang="website">Sito Web</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/restaurants/bottega-fattore.jpg" data-placeholder="small"></div>
-            </div>
-            
-            <div class="info-card animate-on-scroll fade-up" style="animation-delay: 0.2s;">
-                <div class="info-details">
-                    <h3>Davy's Cafe Pizza & Restaurant</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+39058362179">0583 62179</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                            </svg>
-                            Via Francesco Azzi 1, Castelnuovo di Garfagnana
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/restaurants/davys-cafe.jpg" data-placeholder="small"></div>
-            </div>
-            
-            <div class="info-card animate-on-scroll fade-up" style="animation-delay: 0.3s;">
-                <div class="info-details">
-                    <h3>Panigacceria Lo Scalone</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+393331817031">333 181 7031</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                            </svg>
-                            Via Alberto Bertolini 9, Camporgiano
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://panigaccerialoscalone.eatbu.com/?lang=it" target="_blank" data-lang="website">Sito Web</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/restaurants/panigacceria-scalone.jpg" data-placeholder="small"></div>
-            </div>
-            
-            <div class="info-card animate-on-scroll fade-up" style="animation-delay: 0.4s;">
-                <div class="info-details">
-                    <h3>Cantina Bravi</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+393406629325">340 662 9325</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                            </svg>
-                            Località Polla 17, Camporgiano
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://www.vinodellagarfagnana.com/" target="_blank" data-lang="website">Sito Web</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/restaurants/cantina-bravi.jpg" data-placeholder="small"></div>
-            </div>
-            
-            <div class="info-card animate-on-scroll fade-up" style="animation-delay: 0.5s;">
-                <div class="info-details">
-                    <h3>Borgo Biaia</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+393346788207">334 678 8207</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                            </svg>
-                            Località Biaia 1, Camporgiano
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://www.borgobiaia.it/" target="_blank" data-lang="website">Sito Web</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/restaurants/borgo-biaia.jpg" data-placeholder="small"></div>
-            </div>
-            
-            <div class="info-card animate-on-scroll fade-up" style="animation-delay: 0.6s;">
-                <div class="info-details">
-                    <h3>Il Prisco - La Bottega di Pontardeto</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+390583639581">0583 639581</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                            </svg>
-                            Località Pontardeto, Pieve Fosciana
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://www.facebook.com/agriturismoventuro.prisco/?locale=it_IT" target="_blank" data-lang="website">Sito Web</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/restaurants/il-prisco.jpg" data-placeholder="small"></div>
-            </div>
-            
-            <div class="info-card animate-on-scroll fade-up" style="animation-delay: 0.7s;">
-                <div class="info-details">
-                    <h3>Agriturismo il Venuturo</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+393349739354">334 973 9354</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                            </svg>
-                            Via Madonna della Tosse, Castelnuovo di Garfagnana
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://www.agriturismoventuro.com/" target="_blank" data-lang="website">Sito Web</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/restaurants/agriturismo-venturo.jpg" data-placeholder="small"></div>
-            </div>
-            
-            <div class="info-card animate-on-scroll fade-up" style="animation-delay: 0.8s;">
-                <div class="info-details">
-                    <h3>Osteria Le Verrucole</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+393339406560">333 940 6560</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                            </svg>
-                            Via Alpe 2, San Romano in Garfagnana
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://www.facebook.com/osteriaverrucole" target="_blank" data-lang="website">Sito Web</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/restaurants/osteria-verrucole.jpg" data-placeholder="small"></div>
-            </div>
-            
-            <div class="info-card animate-on-scroll fade-up" style="animation-delay: 0.9s;">
-                <div class="info-details">
-                    <h3>Osteria Senso Unico</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+393533204810">353 320 4810</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                            </svg>
-                            Via Roma 1, Castiglione di Garfagnana
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://www.facebook.com/profile.php?id=61551371435867" target="_blank" data-lang="website">Sito Web</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/restaurants/osteria-senso-unico.jpg" data-placeholder="small"></div>
-            </div>
-            
-            <div class="info-card animate-on-scroll fade-up" style="animation-delay: 1.0s;">
-                <div class="info-details">
-                    <h3>Osteria Vecchio Mulino</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+39058362192">0583 62192</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                            </svg>
-                            Via Vittorio Emanuele 12, Castelnuovo di Garfagnana
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://www.facebook.com/vecchiomulino1985/?locale=it_IT" target="_blank" data-lang="website">Sito Web</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/restaurants/osteria-vecchio-mulino.jpg" data-placeholder="small"></div>
-            </div>
-            
-            <div class="info-card animate-on-scroll fade-up" style="animation-delay: 1.1s;">
-                <div class="info-details">
-                    <h3>Al Teatro Laboratorio del Gusto</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+393249945918">324 994 5918</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                            </svg>
-                            Via Roma 31, Castelnuovo di Garfagnana
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://www.alteatrolaboratoriodelgusto.com/home/" target="_blank" data-lang="website">Sito Web</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/restaurants/al-teatro.jpg" data-placeholder="small"></div>
-            </div>
-        </div>
-        
-        <div id="dormire" class="tab-content">
-            <!-- TUTTI GLI ALLOGGI -->
-            <div class="info-card animate-on-scroll fade-up">
-                <div class="info-details">
-                    <h3>Agriturismo B&B il Pradicciolo</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+393409040277">340 904 0277</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                            </svg>
-                            Via Francesco Azzi 15/a, Castelnuovo di Garfagnana
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://www.ilpradicciolo.it/" target="_blank" data-lang="website">Sito Web</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/accommodations/bb-pradicciolo.jpg" data-placeholder="small"></div>
-            </div>
-            
-            <div class="info-card animate-on-scroll fade-up" style="animation-delay: 0.1s;">
-                <div class="info-details">
-                    <h3>Rocca di Camporgiano</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+393472270512">+39 3472270512</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                            </svg>
-                            Via della Rocca 2, Camporgiano
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://laroccadicamporgiano.it/" target="_blank" data-lang="website">Sito Web</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/accommodations/rocca-camporgiano.jpg" data-placeholder="small"></div>
-            </div>
-            
-            <div class="info-card animate-on-scroll fade-up" style="animation-delay: 0.2s;">
-                <div class="info-details">
-                    <h3>La Collina dei Franchi</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+393482246135">+39 348 2246135</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                            </svg>
-                            Loc Termini, Camporgiano
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://www.lacollinadeifranchi.it/" target="_blank" data-lang="website">Sito Web</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/accommodations/collina-franchi.jpg" data-placeholder="small"></div>
-            </div>
-            
-            <div class="info-card animate-on-scroll fade-up" style="animation-delay: 0.3s;">
-                <div class="info-details">
-                    <h3>Agriturismo il Venturo</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+39058365605">0583 65605</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                            </svg>
-                            Via Madonna della Tosse, Castelnuovo di Garfagnana
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://www.agriturismoventuro.com/" target="_blank" data-lang="website">Sito Web</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/accommodations/agriturismo-venturo.jpg" data-placeholder="small"></div>
-            </div>
-            
-            <div class="info-card animate-on-scroll fade-up" style="animation-delay: 0.4s;">
-                <div class="info-details">
-                    <h3>Agriturismo la Palazzina</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+39058362631">0583 62631</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                            </svg>
-                            Loc. La Palazzina, Antisciana
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://www.lapalazzina.info/" target="_blank" data-lang="website">Sito Web</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/accommodations/agriturismo-palazzina.jpg" data-placeholder="small"></div>
-            </div>
-            
-            <div class="info-card animate-on-scroll fade-up" style="animation-delay: 0.5s;">
-                <div class="info-details">
-                    <h3>Agriturismo Mulin del Rancone</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+393333376377">333 337 6377</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                            </svg>
-                            Località Rancone, Camporgiano
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://www.facebook.com/mulindelrancone/?locale=it_IT" target="_blank" data-lang="website">Sito Web</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/accommodations/mulin-rancone.jpg" data-placeholder="small"></div>
-            </div>
-            
-            <div class="info-card animate-on-scroll fade-up" style="animation-delay: 0.6s;">
-                <div class="info-details">
-                    <h3>Hotel la Lanterna</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+390583639364">0583 639364</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                            </svg>
-                            Località alle Monache 300, Castelnuovo di Garfagnana
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://hotelristorantelalanterna.com/" target="_blank" data-lang="website">Sito Web</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/accommodations/hotel-lanterna.jpg" data-placeholder="small"></div>
-            </div>
-            
-            <div class="info-card animate-on-scroll fade-up" style="animation-delay: 0.7s;">
-                <div class="info-details">
-                    <h3>Villa Raffaelli</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                            <a href="tel:+393471352489">347 135 2489</a>
-                        </div>
-                        <div class="contact-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                            </svg>
-                            Via Nicola Raffaelli 2, Fosciandora
-                        </div>
-                        <div class="contact-item">
-                            <a href="https://villaraffaelli.it/" target="_blank" data-lang="website">Sito Web</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="img-container info-image" data-img="images/accommodations/villa-raffaelli.jpg" data-placeholder="small"></div>
-            </div>
-        </div>
-        
-        <div id="altre" class="tab-content">
-            <div class="text-center animate-on-scroll fade-up">
-                <h3><a href="https://www.garfagnanadream.it" target="_blank" class="text-primary" data-lang="altre-title">Scopri tantissime altre idee e servizi su Garfagnanadream.it</a></h3>
-                <p style="max-width: 600px; margin: var(--spacing-md) auto;" data-lang="altre-desc">
-                    Visita il portale turistico a 360° sulla Garfagnana: servizi turistici, idee viaggio, natura, sport e attività! Scopri con noi la verde valle della Garfagnana.
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Sezione 06 - Come raggiungerci con animazioni -->
-<section class="section" id="come-raggiungerci">
-    <span class="section-number">06.</span>
-    <div class="container relative">
-        <div class="two-column">
-            <div class="animate-on-scroll fade-left">
-                <h2 data-lang="come-title">Come raggiungerci per pescare in Garfagnana</h2>
-                <p data-lang="come-desc">Auto, treno e anche aereo. Scoprite tutte le indicazioni per raggiungere la Garfagnana nella nostra guida.</p>
-            </div>
-            <div class="animate-on-scroll fade-right">
-                <!-- Accordion -->
-                <div class="accordion">
-                    <div class="accordion-header" onclick="toggleAccordion(this.parentElement)">
-                        <span class="accordion-icon">+</span>
-                        <span data-lang="acc-auto">In auto</span>
-                    </div>
-                    <div class="accordion-content">
-                        <p data-lang="acc-auto-content">L'auto è l'opzione migliore per godersi alcune delle città più famose al mondo prima di immergersi nei territori incontaminati della Garfagnana. Da Firenze (1:30 h) è necessario proseguire in direzione Lucca, scegliendo l'uscita Lucca Est per un giro in centro e da qui si prosegue sulla SR445 per la Garfagnana. Stessa cosa per quanto riguarda Pisa (1 h), a meno che non si opti per la SS12 radd passante per San Giuliano Terme. Da Lucca (45 min), invece, è sufficiente seguire le indicazioni per la Garfagnana, mentre dalla Versilia (1 h) ci si possono godere due passi di montagna molto suggestivi: quello del Cipollaio e quello del Vestito, da imboccare rispettivamente in corrispondenza di Querceta e Massa. Si arriva anche direttamente da Modena (2 h), grazie alla SP72.</p>
-                    </div>
-                </div>
-                
-                <div class="accordion">
-                    <div class="accordion-header" onclick="toggleAccordion(this.parentElement)">
-                        <span class="accordion-icon">+</span>
-                        <span data-lang="acc-aereo">In aereo</span>
-                    </div>
-                    <div class="accordion-content">
-                        <p data-lang="acc-aereo-content">Grazie ai collegamenti degli aeroporti internazionali di Pisa e Firenze è possibile arrivare direttamente in queste città da tutta Europa (Lisbona, Valencia, Barcellona, Madrid, Francoforte, Monaco, Parigi, Londra, Amsterdam, Ginevra e non solo). Da qui si può proseguire in auto o in treno.</p>
-                    </div>
-                </div>
-                
-                <div class="accordion">
-                    <div class="accordion-header" onclick="toggleAccordion(this.parentElement)">
-                        <span class="accordion-icon">+</span>
-                        <span data-lang="acc-treno">In treno</span>
-                    </div>
-                    <div class="accordion-content">
-                        <p data-lang="acc-treno-content">Entrambi gli aeroporti sono collegati direttamente con le relative stazioni principali (Pisa Centrale – Firenze Santa Maria Novella). Le soluzioni a disposizione sono unicamente treni regionali che impiegano parecchio tempo per percorrere la tratta. Ci vogliono circa 1 ora e 30 da Pisa, 2 ore 45 da Firenze, 50 min da Lucca, 50 minuti dalla stazione di Aulla-Lunigiana e in media 1 ora e 30 dalla Versilia (Viareggio).</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Lightbox per video -->
-<div id="video-lightbox" class="lightbox">
-    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-    <button class="lightbox-nav lightbox-prev" onclick="navigateVideo(-1)">‹</button>
-    <button class="lightbox-nav lightbox-next" onclick="navigateVideo(1)">›</button>
-    <div class="video-wrapper">
-        <iframe id="video-frame" src="" frameborder="0" allowfullscreen></iframe>
-    </div>
-</div>
-
-<script>
-    // Sistema multilingua completo con TUTTE le traduzioni
-    const translations = {
-        it: {
-            'prenota-nav': 'Prenota online',
-            'dove-nav': 'Dove pescare',
-            'chi-nav': 'Chi siamo',
-            'video-nav': 'I nostri video',
-            'servizi-nav': 'Vitto, alloggio e guide',
-            'come-nav': 'Come raggiungerci',
-            'hero-title': 'Garfagnana Fishing',
-            'hero-subtitle': 'Il posto in cui non sei mai stato e dove non vedrai l\'ora di tornare',
-            'cta-dove': 'Dove pescare',
-            'cta-chi': 'Chi siamo',
-            'cta-vitto': 'Vitto e alloggio',
-            'cta-video': 'I nostri video',
-            'app-title': 'Scarica l\'app per prenotare',
-            'app-desc': 'Prenota online scaricando l\'app Hooking, ci trovi direttamente lì e puoi pagare con carta di credito!',
-            'dove-title': 'Dove pescare in Garfagnana?',
-            'dove-desc': 'Per gli appassionati di pesca il territorio della Garfagnana offre una miriade di corsi e specchi d\'acqua che attraversa l\'intera valle, dalle Alpi Apuane fino alle pendici dell\'Appennino Tosco-Emiliano. Ambienti magici e incontaminati dove trascorrere del tempo a contatto con la natura più autentica praticando la propria passione. Per rendere questa esperienza più accessibile e indimenticabile ci sono a disposizione 2 zone a regolamento specifico. Trovate tutti i dettagli nelle schede che seguono.',
-            'download-maps': 'Scarica le mappe',
-            'download-rules': 'Scarica il regolamento',
-            'incubatoio-label': 'Incubatoio',
-            'incubatoio-title': 'Incubatoio',
-            'open-maps': 'Apri su Google Maps',
-            'chi-title': 'Cosa è Garfagnana Fishing?',
-            'chi-desc1': 'Garfagnanafishing nasce dagli sforzi congiunti di Garfagnanadream.it, portale per la promozione multimediale del territorio e del Mosca Club Lucca, associazione di pescatori e appassionati da anni attiva a livello provinciale per la gestione e la conservazione dei tratti fluviali di maggior pregio.',
-            'chi-desc2': 'L\'idea nasce per colmare l\'assenza sul territorio di una struttura in grado di occuparsi a livello professionale del settore turistico legato alla pesca. A oggi, infatti, è impossibile rimanere indifferenti di fronte ai risultati raggiunti da altri territori del nostro Paese, dove la pesca turistica contribuisce a interi indotti con numeri a 6 cifre.',
-            'chi-desc3': 'Gli obbiettivi sono portare sul territorio una nuova consapevolezza nei confronti di questa risorsa e sensibilizzare sulla delicatezza e l\'importanza degli ecosistemi teatro dell\'attività di pesca.',
-            'video-title': 'I nostri video, documentari e vlog!',
-            'servizi-title': 'Scopri le nostre guide e i consigli per vitto e alloggio',
-            'servizi-desc': 'In questa sezione troverete alcuni spunti per un soggiorno di qualità in Garfagnana e godervi i prodotti tipici della cucina locale. Per un\'esperienza ancora più immersiva potete rivolgervi alle nostre guide di pesca, che potranno esaudire ogni vostro desiderio, portandovi oltre le nostre zone a regolamento specifico. La Garfagnana vi aspetta per una vacanza avventurosa e indimenticabile.',
-            'tab-guide': 'GUIDE DI PESCA',
-            'tab-mangiare': 'DOVE MANGIARE',
-            'tab-dormire': 'DOVE DORMIRE',
-            'tab-altre': 'ALTRE INFO',
-            'guide-fly': 'Mosca',
-            'website': 'Sito Web',
-            'facebook-page': 'pagina Facebook',
-            'altre-title': 'Scopri tantissime altre idee e servizi su Garfagnanadream.it',
-            'altre-desc': 'Visita il portale turistico a 360° sulla Garfagnana: servizi turistici, idee viaggio, natura, sport e attività! Scopri con noi la verde valle della Garfagnana.',
-            'come-title': 'Come raggiungerci per pescare in Garfagnana',
-            'come-desc': 'Auto, treno e anche aereo. Scoprite tutte le indicazioni per raggiungere la Garfagnana nella nostra guida.',
-            'acc-auto': 'In auto',
-            'acc-aereo': 'In aereo',
-            'acc-treno': 'In treno',
-            'acc-auto-content': 'L\'auto è l\'opzione migliore per godersi alcune delle città più famose al mondo prima di immergersi nei territori incontaminati della Garfagnana. Da Firenze (1:30 h) è necessario proseguire in direzione Lucca, scegliendo l\'uscita Lucca Est per un giro in centro e da qui si prosegue sulla SR445 per la Garfagnana. Stessa cosa per quanto riguarda Pisa (1 h), a meno che non si opti per la SS12 radd passante per San Giuliano Terme. Da Lucca (45 min), invece, è sufficiente seguire le indicazioni per la Garfagnana, mentre dalla Versilia (1 h) ci si possono godere due passi di montagna molto suggestivi: quello del Cipollaio e quello del Vestito, da imboccare rispettivamente in corrispondenza di Querceta e Massa. Si arriva anche direttamente da Modena (2 h), grazie alla SP72.',
-            'acc-aereo-content': 'Grazie ai collegamenti degli aeroporti internazionali di Pisa e Firenze è possibile arrivare direttamente in queste città da tutta Europa (Lisbona, Valencia, Barcellona, Madrid, Francoforte, Monaco, Parigi, Londra, Amsterdam, Ginevra e non solo). Da qui si può proseguire in auto o in treno.',
-            'acc-treno-content': 'Entrambi gli aeroporti sono collegati direttamente con le relative stazioni principali (Pisa Centrale – Firenze Santa Maria Novella). Le soluzioni a disposizione sono unicamente treni regionali che impiegano parecchio tempo per percorrere la tratta. Ci vogliono circa 1 ora e 30 da Pisa, 2 ore 45 da Firenze, 50 min da Lucca, 50 minuti dalla stazione di Aulla-Lunigiana e in media 1 ora e 30 dalla Versilia (Viareggio).',
-            'zrs-alto-desc': 'Classificazione a salmonidi, carattere torrentizio ideale per trota mediterranea autoctona. Avviamento di un incubatoio, tecnica del cocooning, obiettivo tutela e rusticità delle trote autoctone.',
-            'zrs-isola-desc': 'Bacino artificiale alimentato dal torrente Turrite Secca, nel cuore delle Apuane. Borgo medievale che lambisce il bacino, ristoranti e punti di ristoro accessibili.',
-            'incubatoio-desc': 'Gestione per riproduzione artificiale della Trota Fario Mediterranea. Sede in località Casonza nel comune di Fosciandora.'
-        },
-        en: {
-            'prenota-nav': 'Book online',
-            'dove-nav': 'Where to fish',
-            'chi-nav': 'About us',
-            'video-nav': 'Our videos',
-            'servizi-nav': 'Food, accommodation & guides',
-            'come-nav': 'How to reach us',
-            'hero-title': 'Garfagnana Fishing',
-            'hero-subtitle': 'The place you\'ve never been and where you can\'t wait to return',
-            'cta-dove': 'Where to fish',
-            'cta-chi': 'About us',
-            'cta-vitto': 'Food & lodging',
-            'cta-video': 'Our videos',
-            'app-title': 'Download the app to book',
-            'app-desc': 'Book online by downloading the Hooking app, find us directly there and pay by credit card!',
-            'dove-title': 'Where to fish in Garfagnana?',
-            'dove-desc': 'For fishing enthusiasts, the Garfagnana territory offers countless waterways crossing the entire valley, from the Apuan Alps to the Tuscan-Emilian Apennines. Magical and uncontaminated environments where you can spend time in contact with the most authentic nature while practicing your passion. To make this experience more accessible and unforgettable, there are 2 specific regulation zones available. Find all the details in the following cards.',
-            'download-maps': 'Download maps',
-            'download-rules': 'Download regulations',
-            'incubatoio-label': 'Hatchery',
-            'incubatoio-title': 'Hatchery',
-            'open-maps': 'Open on Google Maps',
-            'chi-title': 'What is Garfagnana Fishing?',
-            'chi-desc1': 'Garfagnanafishing was born from the joint efforts of Garfagnanadream.it, a portal for multimedia promotion of the territory, and Mosca Club Lucca, an association of fishermen and enthusiasts active for years at provincial level in the management and conservation of the most valuable river sections.',
-            'chi-desc2': 'The idea arose to fill the absence in the territory of a structure capable of dealing professionally with the tourism sector linked to fishing. Today, in fact, it is impossible to remain indifferent to the results achieved by other territories in our country, where fishing tourism contributes to entire industries with 6-figure numbers.',
-            'chi-desc3': 'The objectives are to bring new awareness to the territory regarding this resource and raise awareness about the delicacy and importance of ecosystems that are the setting for fishing activities.',
-            'video-title': 'Our videos, documentaries and vlogs!',
-            'servizi-title': 'Discover our guides and tips for food and accommodation',
-            'servizi-desc': 'In this section you will find some ideas for a quality stay in Garfagnana and enjoy the typical products of local cuisine. For an even more immersive experience, you can contact our fishing guides, who can fulfill your every wish, taking you beyond our specific regulation zones. Garfagnana awaits you for an adventurous and unforgettable vacation.',
-            'tab-guide': 'FISHING GUIDES',
-            'tab-mangiare': 'WHERE TO EAT',
-            'tab-dormire': 'WHERE TO SLEEP',
-            'tab-altre': 'OTHER INFO',
-            'guide-fly': 'Fly',
-            'website': 'Website',
-            'facebook-page': 'Facebook page',
-            'altre-title': 'Discover many other ideas and services on Garfagnanadream.it',
-            'altre-desc': 'Visit the 360° tourist portal on Garfagnana: tourist services, travel ideas, nature, sports and activities! Discover the green valley of Garfagnana with us.',
-            'come-title': 'How to reach us for fishing in Garfagnana',
-            'come-desc': 'Car, train and even plane. Discover all directions to reach Garfagnana in our guide.',
-            'acc-auto': 'By car',
-            'acc-aereo': 'By plane',
-            'acc-treno': 'By train',
-            'acc-auto-content': 'The car is the best option to enjoy some of the most famous cities in the world before diving into the uncontaminated territories of Garfagnana. From Florence (1:30 h) you need to continue towards Lucca, choosing the Lucca Est exit for a tour of the center and from here continue on SR445 to Garfagnana. Same thing for Pisa (1 h), unless you opt for the SS12 passing through San Giuliano Terme. From Lucca (45 min), however, just follow the signs for Garfagnana, while from Versilia (1 h) you can enjoy two very suggestive mountain passes: Cipollaio and Vestito, to be taken respectively at Querceta and Massa. You can also arrive directly from Modena (2 h), thanks to SP72.',
-            'acc-aereo-content': 'Thanks to the connections of the international airports of Pisa and Florence, it is possible to arrive directly in these cities from all over Europe (Lisbon, Valencia, Barcelona, Madrid, Frankfurt, Munich, Paris, London, Amsterdam, Geneva and more). From here you can continue by car or train.',
-            'acc-treno-content': 'Both airports are directly connected to their respective main stations (Pisa Centrale – Firenze Santa Maria Novella). The only solutions available are regional trains that take a long time to travel the route. It takes about 1 hour and 30 from Pisa, 2 hours 45 from Florence, 50 min from Lucca, 50 minutes from Aulla-Lunigiana station and on average 1 hour and 30 from Versilia (Viareggio).',
-            'cookie-title': 'This site uses cookies',
-            'cookie-desc': 'We use cookies to improve your experience. By continuing you accept our cookie policy.',
-            'cookie-accept': 'Accept',
-            'cookie-settings': 'Settings',
-            'zrs-alto-desc': 'Salmonid classification, torrential character ideal for native Mediterranean trout. Hatchery startup, cocooning technique, objective of protection and rusticity of native trout.',
-            'zrs-isola-desc': 'Artificial basin fed by the Turrite Secca stream, in the heart of the Apuan Alps. Medieval village that touches the basin, restaurants and refreshment points accessible.',
-            'incubatoio-desc': 'Management for artificial reproduction of Mediterranean Brown Trout. Headquarters in Casonza in the municipality of Fosciandora.'
-        }
-    };
-    
-    let currentLang = 'it';
-    let currentPanel = null;
-    let currentVideoIndex = 0;
-    let videoUrls = [];
-    
-    // Gestione menu mobile
-    function toggleMobileMenu() {
-        const burger = document.querySelector('.burger-menu');
-        const menu = document.querySelector('.mobile-menu');
-        burger.classList.toggle('active');
-        menu.classList.toggle('active');
-    }
-    
-    function closeMobileMenu() {
-        const burger = document.querySelector('.burger-menu');
-        const menu = document.querySelector('.mobile-menu');
-        burger.classList.remove('active');
-        menu.classList.remove('active');
-    }
-    
-    // Cambio lingua
-    function toggleLanguage() {
-        currentLang = currentLang === 'it' ? 'en' : 'it';
-        document.documentElement.lang = currentLang;
-        
-        document.querySelectorAll('[data-lang]').forEach(el => {
-            const key = el.getAttribute('data-lang');
-            if (translations[currentLang][key]) {
-                el.textContent = translations[currentLang][key];
-            }
-        });
-        
-        document.getElementById('lang-label').textContent = currentLang === 'it' ? 'Italiano' : 'English';
-        
-        const flagIcon = document.getElementById('flag-icon');
-        if (currentLang === 'en') {
-            flagIcon.innerHTML = `
-                <rect width="24" height="16" fill="#012169"></rect>
-                <path d="M0,0 L24,16 M24,0 L0,16" stroke="white" stroke-width="3"></path>
-                <path d="M0,0 L24,16 M24,0 L0,16" stroke="#C8102E" stroke-width="2"></path>
-                <path d="M12,0 V16 M0,8 H24" stroke="white" stroke-width="5"></path>
-                <path d="M12,0 V16 M0,8 H24" stroke="#C8102E" stroke-width="3"></path>
-            `;
-        } else {
-            flagIcon.innerHTML = `
-                <rect width="8" height="16" fill="#009246"></rect>
-                <rect x="8" width="8" height="16" fill="#FFFFFF"></rect>
-                <rect x="16" width="8" height="16" fill="#CE2B37"></rect>
-            `;
-        }
-        
-        localStorage.setItem('preferredLang', currentLang);
-    }
-    
-    // Sistema di gestione immagini con placeholder automatici
-    function initImageSystem() {
-        document.querySelectorAll('.img-container').forEach(container => {
-            const imgPath = container.getAttribute('data-img');
-            const placeholderType = container.getAttribute('data-placeholder') || 'default';
-            
-            if (imgPath) {
-                const img = new Image();
-                img.onload = function() {
-                    if (container.classList.contains('hero-bg')) {
-                        container.style.backgroundImage = `url('${imgPath}')`;
-                    } else if (container.classList.contains('main-logo')) {
-                        container.innerHTML = `<img src="${imgPath}" alt="Logo" style="width: 100%; height: 100%;">`;
-                    } else if (container.classList.contains('store-badge')) {
-                        container.innerHTML = `<img src="${imgPath}" alt="Badge" style="height: 60px;">`;
-                    } else if (container.classList.contains('drop-cap-logo')) {
-                        container.innerHTML = `<img src="${imgPath}" alt="Logo">`;
-                    } else {
-                        container.innerHTML = `<img src="${imgPath}" alt="" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius);">`;
-                    }
-                };
-                
-                img.onerror = function() {
-                    createPlaceholder(container, placeholderType);
-                };
-                
-                img.src = imgPath;
-            } else {
-                createPlaceholder(container, placeholderType);
-            }
-        });
-    }
-    
-    function createPlaceholder(container, type) {
-        let placeholder = '';
-        
-        if (container.classList.contains('hero-bg')) {
-            container.innerHTML = '<div class="img-placeholder full-cover"></div>';
-            return;
-        }
-        
-        if (container.classList.contains('drop-cap-logo')) {
-            container.innerHTML = '<div style="width: 100%; height: 100%; background: #E5E7EB; border-radius: 50%;"></div>';
-            return;
-        }
-        
-        switch(type) {
-            case 'logo':
-                placeholder = '<div style="width: 120px; height: 120px; background: #E5E7EB; border-radius: 50%;"></div>';
-                break;
-            case 'badge':
-                placeholder = '<div style="width: 180px; height: 60px; background: #E5E7EB; border-radius: 8px;" class="skeleton"></div>';
-                break;
-            case 'card':
-                placeholder = '<div class="img-placeholder" style="height: 100%;"></div>';
-                break;
-            case 'large':
-                placeholder = '<div class="img-placeholder" style="height: 100%;"></div>';
-                break;
-            case 'small':
-                placeholder = '<div class="img-placeholder" style="width: 100%; height: 100%;"></div>';
-                break;
-            default:
-                placeholder = '<div class="img-placeholder"></div>';
-        }
-        
-        container.innerHTML = placeholder;
-    }
-    
-    // Estrae ID YouTube da vari tipi di URL
-    function extractYouTubeId(url) {
-        try {
-            const urlObj = new URL(url);
-            if (urlObj.hostname === 'youtu.be') {
-                return urlObj.pathname.slice(1);
-            }
-            if (urlObj.searchParams.get('v')) {
-                return urlObj.searchParams.get('v');
-            }
-            const parts = urlObj.pathname.split('/').filter(Boolean);
-            const embedIndex = parts.indexOf('embed');
-            if (embedIndex !== -1 && parts[embedIndex + 1]) {
-                return parts[embedIndex + 1];
-            }
-            return null;
-        } catch (e) {
-            return null;
-        }
-    }
-    
-    function getEmbedUrlFromWatch(url) {
-        const id = extractYouTubeId(url);
-        if (!id) return null;
-        return 'https://www.youtube.com/embed/' + id;
-    }
-    
-    // Inizializza le thumbnail dei video usando i.ytimg.com
-    function initVideoThumbnails() {
-        const videoCards = document.querySelectorAll('#video-grid .card');
-        videoCards.forEach((card, index) => {
-            const dataDiv = card.querySelector('[data-video-url]');
-            if (!dataDiv) return;
-            const url = dataDiv.getAttribute('data-video-url');
-            if (!url || url.includes('PLACEHOLDER')) return;
-            
-            const id = extractYouTubeId(url);
-            if (!id) return;
-            
-            const thumbnailUrl = 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg';
-            const container = dataDiv.parentElement;
-            const existingImg = container.querySelector('img');
-            if (existingImg) {
-                existingImg.remove();
-            }
-            const img = document.createElement('img');
-            img.src = thumbnailUrl;
-            img.alt = 'Anteprima video ' + (index + 1);
-            img.style.width = '100%';
-            img.style.height = '100%';
-            img.style.objectFit = 'cover';
-            container.insertBefore(img, container.firstChild);
-            
-            videoUrls[index] = url;
-        });
-    }
-    
-    // Gestione video con lightbox
-    function openLightbox(index) {
-        const videoCards = document.querySelectorAll('#video-grid .card');
-        const card = videoCards[index];
-        if (!card) return;
-        
-        const dataDiv = card.querySelector('[data-video-url]');
-        if (!dataDiv) return;
-        
-        const videoUrl = dataDiv.getAttribute('data-video-url');
-        if (!videoUrl || videoUrl.includes('PLACEHOLDER')) {
-            alert('Video non ancora disponibile. Sostituire PLACEHOLDER_VIDEO_ID con l\'ID reale del video YouTube.');
-            return;
-        }
-        
-        const embedUrl = getEmbedUrlFromWatch(videoUrl);
-        if (!embedUrl) {
-            alert('URL del video non valido.');
-            return;
-        }
-        
-        currentVideoIndex = index;
-        const lightbox = document.getElementById('video-lightbox');
-        const frame = document.getElementById('video-frame');
-        frame.src = embedUrl + '?autoplay=1';
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-    
-    function closeLightbox() {
-        const lightbox = document.getElementById('video-lightbox');
-        const frame = document.getElementById('video-frame');
-        lightbox.classList.remove('active');
-        frame.src = '';
-        document.body.style.overflow = '';
-    }
-    
-    function navigateVideo(direction) {
-        const videoCards = document.querySelectorAll('#video-grid .card');
-        if (!videoCards.length) return;
-        
-        currentVideoIndex = (currentVideoIndex + direction + videoCards.length) % videoCards.length;
-        const card = videoCards[currentVideoIndex];
-        const dataDiv = card.querySelector('[data-video-url]');
-        if (!dataDiv) return;
-        
-        const videoUrl = dataDiv.getAttribute('data-video-url');
-        if (!videoUrl || videoUrl.includes('PLACEHOLDER')) {
-            // salta i placeholder
-            navigateVideo(direction);
-            return;
-        }
-        
-        const embedUrl = getEmbedUrlFromWatch(videoUrl);
-        if (!embedUrl) return;
-        
-        const frame = document.getElementById('video-frame');
-        frame.src = embedUrl + '?autoplay=1';
-    }
-    
-    // Pannelli ZRS
-    function togglePanel(panelId) {
-        const panel = document.getElementById('panel-' + panelId);
-        if (!panel) return;
-        
-        if (currentPanel && currentPanel !== panel) {
-            currentPanel.classList.remove('active');
-        }
-        
-        panel.classList.toggle('active');
-        currentPanel = panel.classList.contains('active') ? panel : null;
-        
-        if (panel.classList.contains('active')) {
-            const rect = panel.getBoundingClientRect();
-            const offset = window.pageYOffset + rect.top - 120;
-            window.scrollTo({ top: offset, behavior: 'smooth' });
-        }
-    }
-    
-    function closePanel() {
-        if (currentPanel) {
-            currentPanel.classList.remove('active');
-            currentPanel = null;
-        }
-    }
-    
-    // Tabs servizi
-    function switchTab(event, tabId) {
-        const tabs = document.querySelectorAll('.tab');
-        const contents = document.querySelectorAll('.tab-content');
-        
-        tabs.forEach(tab => tab.classList.remove('active'));
-        contents.forEach(content => content.classList.remove('active'));
-        
-        event.currentTarget.classList.add('active');
-        const activeContent = document.getElementById(tabId);
-        if (activeContent) {
-            activeContent.classList.add('active');
-        }
-    }
-    
-    // Accordion
-    function toggleAccordion(accordion) {
-        const isActive = accordion.classList.contains('active');
-        document.querySelectorAll('.accordion').forEach(acc => acc.classList.remove('active'));
-        if (!isActive) {
-            accordion.classList.add('active');
-        }
-    }
-    
-    // Animazioni on scroll
-    function initScrollAnimations() {
-        const elements = document.querySelectorAll('.animate-on-scroll');
-        if (!('IntersectionObserver' in window)) {
-            elements.forEach(el => el.classList.add('visible'));
-            return;
-        }
-        
-        const observer = new IntersectionObserver((entries, obs) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    obs.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.15 });
-        
-        elements.forEach(el => observer.observe(el));
-    }
-    
-    // Evidenziazione nav in base alla sezione
-    function initNavHighlight() {
-        const sections = Array.from(document.querySelectorAll('section[id]'));
-        const navLinks = Array.from(document.querySelectorAll('.navbar .nav-pill, .mobile-menu .nav-pill'));
-        
-        function onScroll() {
-            const scrollPos = window.scrollY + 140;
-            let currentId = null;
-            
-            for (const section of sections) {
-                if (scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
-                    currentId = section.id;
-                    break;
-                }
-            }
-            
-            navLinks.forEach(link => {
-                const href = link.getAttribute('href');
-                if (!href || !href.startsWith('#')) return;
-                const id = href.substring(1);
-                link.classList.toggle('active', id === currentId);
-            });
-        }
-        
-        window.addEventListener('scroll', onScroll);
-        onScroll();
-    }
-    
-    // Evento per chiusura lightbox su click fuori o ESC
-    function initLightboxEvents() {
-        const lightbox = document.getElementById('video-lightbox');
-        if (!lightbox) return;
-        
-        lightbox.addEventListener('click', function(e) {
-            if (e.target === lightbox) {
-                closeLightbox();
-            }
-        });
-        
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeLightbox();
-            }
-        });
-    }
-    
-    document.addEventListener('DOMContentLoaded', function() {
-        // Lingua preferita
-        const storedLang = localStorage.getItem('preferredLang');
-        if (storedLang === 'en') {
-            currentLang = 'it';
-            toggleLanguage();
-        } else {
-            document.documentElement.lang = currentLang;
-        }
-        
-        initImageSystem();
-        initScrollAnimations();
-        initNavHighlight();
-        initVideoThumbnails();
-        initLightboxEvents();
-    });
-</script>
-</body>
-</html>
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6
